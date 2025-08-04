@@ -10,4 +10,5 @@
     Locker = 7,
     Text = 8,
     Interactable = 9,
+    Waypoint = 10,
 }

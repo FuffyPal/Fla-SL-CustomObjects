@@ -74,6 +74,9 @@ public class RightClickMenuExtended
 	[MenuItem("GameObject/🛠️ MER Blocks/Interactable", false, -1)]
 	private static void CreateInteractable(MenuCommand menuCommand) => CreateBlock(menuCommand, "Assets/Resources/Blocks/Interactable.prefab");
 
+	[MenuItem("GameObject/🛠️ MER Blocks/Waypoint", false, -1)]
+	private static void CreateWaypoint(MenuCommand menuCommand) => CreateBlock(menuCommand, "Assets/Resources/Blocks/Waypoint.prefab");
+
 	private static void CreateBlock(MenuCommand menuCommand, string prefabPath)
 	{
 		GameObject instance = SchematicBlock.Create<GameObject>(prefabPath);
