@@ -13,15 +13,32 @@ public class InteractableComponent : SchematicBlock
 
 	public bool IsLocked;
 
+	[Header("Animation Trigger Settings")]
+	[Tooltip("Drag and drop the target Animator within the schematic here.")]
+	public Animator TargetAnimator;
+	[Tooltip("The animation state to play on interaction.")]
+	public string AnimationStateName;
+	[Tooltip("An optional second state to toggle to on subsequent interactions.")]
+	public string AnimationStateName2;
+
 	public override BlockType BlockType => BlockType.Interactable;
 
 	public override void Compile(SchematicBlockData block)
 	{
+		int targetAnimatorId = 0;
+		if (TargetAnimator != null)
+		{
+			targetAnimatorId = TargetAnimator.transform.GetInstanceID();
+		}
+
 		block.Properties = new Dictionary<string, object>
 		{
 			{ "Shape", Shape },
 			{ "InteractionDuration", InteractionDuration },
-			{ "IsLocked", IsLocked }
+			{ "IsLocked", IsLocked },
+			{ "TargetAnimatorId", targetAnimatorId },
+			{ "AnimationStateName", AnimationStateName },
+			{ "AnimationStateName2", AnimationStateName2 }
 		};
 
 		base.Compile(block);
@@ -35,6 +52,9 @@ public class InteractableComponent : SchematicBlock
 		interactable.Shape = (ColliderShape)Convert.ToInt32(block.Properties["Shape"]);
 		interactable.InteractionDuration = Convert.ToSingle(block.Properties["InteractionDuration"]);
 		interactable.IsLocked = block.Properties.TryGetValue("IsLocked", out object isLocked) && Convert.ToBoolean(isLocked);
+		
+		interactable.AnimationStateName = block.Properties.TryGetValue("AnimationStateName", out object state) ? Convert.ToString(state) : string.Empty;
+		interactable.AnimationStateName2 = block.Properties.TryGetValue("AnimationStateName2", out object state2) ? Convert.ToString(state2) : string.Empty;
 
 		base.Decompile(ref gameObject, block, parent);
 	}
