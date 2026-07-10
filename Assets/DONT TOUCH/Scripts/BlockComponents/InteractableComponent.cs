@@ -14,8 +14,8 @@ public class InteractableComponent : SchematicBlock
 	public bool IsLocked;
 
 	[Header("Animation Trigger Settings")]
-	[Tooltip("Drag and drop the target Animator within the schematic here.")]
-	public Animator TargetAnimator;
+	[Tooltip("Drag and drop the target GameObject (containing the Animator component) here.")]
+	public GameObject TargetObject;
 	[Tooltip("The animation state to play on interaction.")]
 	public string AnimationStateName;
 	[Tooltip("An optional second state to toggle to on subsequent interactions.")]
@@ -26,9 +26,9 @@ public class InteractableComponent : SchematicBlock
 	public override void Compile(SchematicBlockData block)
 	{
 		int targetAnimatorId = 0;
-		if (TargetAnimator != null)
+		if (TargetObject != null)
 		{
-			targetAnimatorId = TargetAnimator.transform.GetInstanceID();
+			targetAnimatorId = TargetObject.transform.GetInstanceID();
 		}
 
 		block.Properties = new Dictionary<string, object>
